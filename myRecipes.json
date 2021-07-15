@@ -1,19 +1,6 @@
-[
-    {
-        "Recipe" : "Lasagna",
-        "Description" : "Italian pasta oven dish",
-        "Preperation Time" : "20 min",
-        "Cooking Time" : "45 min",
-        "Ingredients": { 
-            "Lasagna sheets" : "1 pack",
-            "Canned Tomota blocks" : "2 cans",
-            "Minced beef" : "800 gr",
-            "Spinache" : "600 gr",
-            "Grated cheese" : "100 gr",
-            "Milk" : "100 ml",
-            "Butter" : "30 gr",
-            "Flower" : "50 gr",
-            "Beef cube" : "2 cubes"
-        }
-    }
-]
+{
+    "recipe" : "Lasagna",
+    "description" : "A Italian pasta oven dish",
+    "preperationTime" : "20 min",
+    "cookingTime" : "45 min"
+}
