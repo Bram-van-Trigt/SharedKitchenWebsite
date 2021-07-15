@@ -8,6 +8,11 @@ const server = http.createServer((req, res) => {
     // set header content type
     res.setHeader('Content-Type', 'text/html');
 
+    //url path configuration
+
+    //send back requested html file
+    
+
     // read json file
     fs.readFile('./myRecipes.json', (err, data) =>{
         if (err) {
@@ -16,6 +21,7 @@ const server = http.createServer((req, res) => {
         } else {
             console.log(JSON.parse(data));
             myRecipes = JSON.parse(data);
+            res.write(data)
             res.write('<header>Available Meals:<header>');
 
             res.write('<p>' + myRecipes.recipe + '<p>');
