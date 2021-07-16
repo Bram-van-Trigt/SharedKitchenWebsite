@@ -1,38 +1,37 @@
-const http = require('http');
-const fs = require('fs');
+const express = require('express');
+const app = express();
 const port = 3000;
 
-const server = http.createServer((req, res) => {
-    console.log(req.url, req.method);
-
-    // set header content type
-    res.setHeader('Content-Type', 'text/html');
+app.get('/', (req, res) => {
 
     //url path configuration
+    let  path = './views/';
+    switch(req.url){
+        case '/':
+            path += 'index.html';
+            break;
+        case '/mealsAPI':
+            //return json data from myRecipes.json
+            path = './tempJson/myRecipes.json';
+            break;
+        default:
+            path += '404.html';
+            break
+    }
 
-    //send back requested html file
-    
-
-    // read json file
-    fs.readFile('./myRecipes.json', (err, data) =>{
+    //send back requested html file.
+    fs.readFile(path, (err, data) => {
         if (err) {
             console.log(err);
-            res.end('Something is going wrong')
+            res.end();
         } else {
-            console.log(JSON.parse(data));
-            myRecipes = JSON.parse(data);
-            res.write(data)
-            res.write('<header>Available Meals:<header>');
-
-            res.write('<p>' + myRecipes.recipe + '<p>');
-
-            res.write(myRecipes.description);
+            res.write(data);
             res.end();
         }
-    })
+    });
 });
 
-server.listen(port, 'localhost', function(error) {
+app.listen(port, 'localhost', function(error) {
     if (error){
         console.log('Something went wrong', error);
     } else {
