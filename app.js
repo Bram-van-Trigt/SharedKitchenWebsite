@@ -1,6 +1,6 @@
 //load express functions
 var express = require('express');
-var exphbs = require('express-handlebars');
+var hbs = require('hbs');
 var path = require('path');
 var port = 3000;
 session = require('express-session');
@@ -13,20 +13,20 @@ var app = express();
 
 
 // view engine setup
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
+//app.engine('handlebars', exphbs());
+app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname , 'public')));
 app.set('views',path.join(__dirname , 'views'));
 
 
 
 //app.use to execute the routes
-app.use('/meals', mealsRouter);
+app.use('/', mealsRouter);
 
 // Simple test case for engine
-app.get('/', (req, res) =>{
-    res.render('index');
-});
+// app.get('/', (req, res) =>{
+//     res.render('index');
+// });
 
 app.listen(port, 'localhost', function(error) {
     if (error){
