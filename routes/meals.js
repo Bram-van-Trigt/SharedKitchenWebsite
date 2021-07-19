@@ -1,7 +1,9 @@
 const express = require('express');
-const router = express.Router;
+const router = express.Router();
 
 
-router.get('/API', function(req, res, next) {
+router.get('/', function( req, res, next ) {
     res.render('mealsAPI');
 });
+
+module.exports = router;

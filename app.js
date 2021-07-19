@@ -1,34 +1,31 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+//load express functions
+var express = require('express');
+var exphbs = require('express-handlebars');
+var path = require('path');
+var port = 3000;
+session = require('express-session');
 
-app.get('/', (req, res) => {
 
-    //url path configuration
-    let  path = './views/';
-    switch(req.url){
-        case '/':
-            path += 'index.html';
-            break;
-        case '/mealsAPI':
-            //return json data from myRecipes.json
-            path = './tempJson/myRecipes.json';
-            break;
-        default:
-            path += '404.html';
-            break
-    }
+// require routes
+var mealsRouter = require('./routes/meals');
 
-    //send back requested html file.
-    fs.readFile(path, (err, data) => {
-        if (err) {
-            console.log(err);
-            res.end();
-        } else {
-            res.write(data);
-            res.end();
-        }
-    });
+var app = express();
+
+
+// view engine setup
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+app.use(express.static(path.join(__dirname , 'public')));
+app.set('views',path.join(__dirname , 'views'));
+
+
+
+//app.use to execute the routes
+app.use('/meals', mealsRouter);
+
+// Simple test case for engine
+app.get('/', (req, res) =>{
+    res.render('index');
 });
 
 app.listen(port, 'localhost', function(error) {
@@ -38,3 +35,5 @@ app.listen(port, 'localhost', function(error) {
         console.log('Server is listening on port ' + port);
     }
 });
+
+module.exports = app;
