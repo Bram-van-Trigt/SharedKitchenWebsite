@@ -11,7 +11,7 @@ var myMeals = fs.readFileSync('tempJson/myMeals.json', 'utf-8');
 // render routes
 router.get('/', function( req, res, next ) {
     var meal_list = JSON.parse(myMeals);
-    res.render('myMeals', { title: 'My meals', header: 'Available meals:', text: meal_list.recipe });
+    res.render('myMeals', { title: 'My meals', header: 'Available meals:', text: meal_list.meals[0].recipe });
 });
 
 router.get('/API', function( req, res, next ) {

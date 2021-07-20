@@ -1,6 +1,15 @@
 {
-    "recipe" : "Lasagna",
-    "description" : "A Italian pasta oven dish",
-    "preperationTime" : "20 min",
-    "cookingTime" : "45 min"
+    "meals" : [
+    {
+        "recipe" : "Lasagna",
+        "description" : "A Italian pasta oven dish",
+        "preperationTime" : "20 min",
+        "cookingTime" : "45 min"
+    } ,
+    {   "recipe" : "Pasta Pesto",
+        "description" : "A Italian pasta oven dish",
+        "preperationTime" : "20 min",
+        "cookingTime" : "45 min"
+    }
+    ]
 }
