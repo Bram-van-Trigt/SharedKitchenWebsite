@@ -13,7 +13,6 @@ var app = express();
 
 
 // view engine setup
-// app.engine('handlebars', exphbs());                               outcomment to check what solved error
 app.set('view engine', 'pug');
 // app.use(express.static(path.join(__dirname , 'public')));         outcomment to check what solved error
 app.set('views',path.join(__dirname , 'views'));
