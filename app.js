@@ -1,27 +1,25 @@
 //load express functions
 var express = require('express');
-var hbs = require('hbs');
 var path = require('path');
 var port = 3000;
 session = require('express-session');
 
 
-// require routes
+// require route files
 var mealsRouter = require('./routes/meals');
 
 var app = express();
 
 
 // view engine setup
-//app.engine('handlebars', exphbs());
-app.set('view engine', 'hbs');
-app.use(express.static(path.join(__dirname , 'public')));
+// app.engine('handlebars', exphbs());                               outcomment to check what solved error
+app.set('view engine', 'pug');
+// app.use(express.static(path.join(__dirname , 'public')));         outcomment to check what solved error
 app.set('views',path.join(__dirname , 'views'));
 
 
-
-//app.use to execute the routes
-app.use('/', mealsRouter);
+// execute routes from adress
+app.use('/meals', mealsRouter);
 
 // Simple test case for engine
 // app.get('/', (req, res) =>{
