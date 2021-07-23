@@ -2,6 +2,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var cors = require('cors');
 var port = 3000;
 session = require('express-session');
 
@@ -10,7 +11,7 @@ session = require('express-session');
 var mealsRouter = require('./routes/meals');
 
 var app = express();
-
+app.use(cors())
 
 // view engine setup
 app.set('view engine', 'pug');
