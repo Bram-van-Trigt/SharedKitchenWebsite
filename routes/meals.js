@@ -5,8 +5,7 @@ const fs = require('fs');
 
 // read json file
 var myMeals = fs.readFileSync('tempJson/myMeals.json', 'utf-8');
-
-// console.log(myMeals);
+console.log(myMeals);
 
 // render routes
 router.get('/', function( req, res, next ) {
@@ -15,7 +14,7 @@ router.get('/', function( req, res, next ) {
 });
 
 router.get('/API', function( req, res, next ) {
-    res.render('API', { title: 'Meals API', header: 'Meals API:', text: myMeals });
+    res.render('API', { title: 'Meals API', text: myMeals });
 });
 
 module.exports = router;
