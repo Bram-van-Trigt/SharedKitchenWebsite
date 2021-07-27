@@ -14,7 +14,7 @@ router.get('/', function( req, res, next ) {
 });
 
 router.get('/API', function( req, res, next ) {
-    res.render('API', { title: 'Meals API', text: myMeals });
+    res.render('API', { text: myMeals });
 });
 
 module.exports = router;
