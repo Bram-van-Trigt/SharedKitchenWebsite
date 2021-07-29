@@ -1,0 +1,12 @@
+th.tableheader {
+    font-size: 30;
+    border-bottom: 2px solid;
+    text-align: left;
+}
+
+td.recipe{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+

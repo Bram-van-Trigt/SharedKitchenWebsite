@@ -4,17 +4,19 @@ mixin recipe(recipeData)
     td.prep preperation: #{recipeData.preperationTime}min 
     td.cook cookingtime: #{recipeData.cookingTime}min 
   tr 
-    td.desc #{recipeData.description} 
+    td.desc(colspan='2') #{recipeData.description} 
     td.persons #{recipeData.persons}persons meal
+
 html
   head
     title= title
-    style 
+    style
+      include styles/styles.css
   body
     table
       thead 
         tr 
-          th(colspan='3')= header
+          th.tableheader(colspan='3')= header
       tbody
         for meal in tableInput
           +recipe(meal)
