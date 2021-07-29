@@ -1,1 +1,1 @@
-{"Meals":["lasagna","Pasta Pesto","Tomato Soup","Taco's"]}
+{"meals":[{"recipeName":"Butter chicken","description":"Indian mild chicken curry with naanbread.","preperationTime":25,"cookingTime":45,"persons":4},{"recipeName":"Pasta Pesto","description":"Italian dish with pasta, brocolli and pesto.","preperationTime":15,"cookingTime":10,"persons":2},{"recipeName":"Tomato Soup","description":"","preperationTime":15,"cookingTime":20,"persons":4}]}
