@@ -1,0 +1,58 @@
+{
+"id1":{
+    "recipeName":"Butter chicken",
+    "description":"Indian mild chicken curry with naanbread.",
+    "preperationTime":25,
+    "cookingTime":45,
+    "persons":4,
+    "ingredients":[
+        "700g kipdijfilet",
+        "50g Griekse yoghurt 10%",
+        "40g verse gember",
+        "5tenen knoflook",
+        "3el garam masala",
+        "½tl chilipoeder",
+        "1tl gerookte-paprikapoeder",
+        "1tl zout",
+        "2 middelgrote uien",
+        "30g ongezouten roomboter",
+        "5 Nederlandse trostomaten",
+        "50g tomatenpuree",
+        "125ml verse slagroom",
+        "100 ml water",
+        "2el zonnebloemolie",
+        "1el kristalsuiker",
+        "7½ g verse koriander"
+        ],
+    "instructions":[
+        "Stap 1: Snijd de kipdijfilets in stukken van 3-4 cm en meng met de yoghurt in een kom. Rasp de gember en knoflook met een fijne rasp en meng met de garam masala, chilipoeder, gerookte-paprikapoeder en het zout. Meng de helft van dit specerijenmengsel door de kip. Dek af en laat ca. 30 min. marineren.",    
+        "Stap 2: Snijd ondertussen de uien in stukken. Verhit de boter in een grote hapjespan en fruit de uien 3 min. Voeg de rest van het specerijenmengsel toe en bak nog 2 min mee. Snijd ondertussen de tomaten grof, voeg samen met de tomatenpuree, 100 ml van de slagroom (per 4 personen) en het water toe. Kook met de deksel op de pan 15 min. op middelhoog vuur.",
+        "Stap 3: Haal het tomatencurry van het vuur en pureer met een staafmixer tot een gladde saus. Zet de pan met deksel terug op laag vuur.",
+        "Stap 4: Verhit de grillpan zonder olie of boter. Haal ondertussen de kip uit de koelkast en meng olie erdoor. Gril de kip in delen op hoog vuur in ca. 5 min. rondom bruin. De kip gaart straks verder in de saus. Voeg de gegrilde kip, het eventuele bakvet en de suiker toe aan de gepureerde saus en kook nog 5 min. op laag vuur mee.",
+        "Stap 5: Snijd ondertussen de koriander fijn. Besprenkel vlak voor het serveren met rest van de slagroom en bestrooi met de koriander"
+        ],
+    "display":false,
+    "myMeals":true
+},
+"id2":{
+    "recipeName":"Pasta Pesto",
+    "description":"Italian dish with pasta, brocolli and pesto.",
+    "preperationTime":15,
+    "cookingTime":10,
+    "persons":2,
+    "ingredients":"",
+    "instructions":"",
+    "display":false,
+    "myMeals":true
+},
+"id3":{
+    "recipeName":"Tomato Soup",
+    "description":"",
+    "preperationTime":15,
+    "cookingTime":20,
+    "persons":4,
+    "ingredients":"",
+    "instructions":"",
+    "display":false,
+    "myMeals":true
+}}

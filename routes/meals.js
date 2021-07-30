@@ -7,7 +7,7 @@ const fs = require('fs');
 router.get('/', function( req, res, next ) {
     var myMeals = JSON.parse(fs.readFileSync('tempJson/myMeals.json', 'utf-8'));
     console.log(myMeals);
-    res.render('myMeals', {title:'My meals', header:'AVAILABLE MEALS:', tableInput: myMeals.meals});
+    res.render('myMeals', {title:'My meals', header:'AVAILABLE MEALS:', tableInput: myMeals});
 });
 
 router.get('/API', function( req, res, next ) {

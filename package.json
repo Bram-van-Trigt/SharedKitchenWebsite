@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Bram-van-Trigt/SharedKitchenWebsite#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "daemon": "^1.1.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.2",
     "express-session": "^1.17.2",

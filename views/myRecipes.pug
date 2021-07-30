@@ -1,8 +1,8 @@
-mixin recipe(recipeData, castingData)
+mixin recipe(recipeData)
   tr 
     td.recipe #{recipeData.recipeName}
     td
-      input(type="button",name=recipeData.id value= castingData)
+      input(type="button",name=newRecipe value= "Add to meals")
   tr 
     td.prep prep: #{recipeData.preperationTime}min 
     td.cook cook: #{recipeData.cookingTime}min 
@@ -19,11 +19,9 @@ html
     table
       thead 
         tr 
-          th.tableheader(colspan='3')= header
+          th.tableheader(colspan='2')= header
+          th.tableheader
+            input(type="button", value="Add new Recipe")
       tbody
         for meal in tableInput
-          if meal.display
-            - var casting = "Stop Magic Mirror Casting"
-          else 
-            - var casting = "Cast to Maggic Mirror"
           +recipe(meal, casting)

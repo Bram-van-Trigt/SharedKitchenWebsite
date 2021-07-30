@@ -9,9 +9,10 @@ session = require('express-session');
 
 // require route files
 var mealsRouter = require('./routes/meals');
+var recipesRouter = require('./routes/recipes');
 
 var app = express();
-app.use(cors())
+app.use(cors());
 
 // view engine setup
 app.set('view engine', 'pug');
@@ -21,6 +22,7 @@ app.set('views',path.join(__dirname , 'views'));
 
 // execute routes from adress
 app.use('/meals', mealsRouter);
+app.use('/recipes', recipesRouter);
 
 // Simple test case for engine
 // app.get('/', (req, res) =>{
