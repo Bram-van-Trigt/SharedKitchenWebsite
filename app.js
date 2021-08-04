@@ -1,4 +1,4 @@
-//load express functions
+//load modules
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,10 +6,15 @@ var cors = require('cors');
 var port = 3000;
 session = require('express-session');
 
+// mongo database
+/*todo: mongo.js is executed this way. 
+It seems that this is only necessary in the routes that use the monge db data.*/
+const mongo = require('./mongo')
 
 // require route files
 var mealsRouter = require('./routes/meals');
 var recipesRouter = require('./routes/recipes');
+//const { use } = require('./routes/recipes');
 
 var app = express();
 app.use(cors());
