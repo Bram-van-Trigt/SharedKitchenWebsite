@@ -9,7 +9,7 @@ session = require('express-session');
 // mongo database
 /*todo: mongo.js is executed this way. 
 It seems that this is only necessary in the routes that use the monge db data.*/
-const mongo = require('./mongo')
+const database = require('./database')
 
 // require route files
 var mealsRouter = require('./routes/meals');

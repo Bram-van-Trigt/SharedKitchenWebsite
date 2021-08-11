@@ -11,4 +11,4 @@ const myRecipesSchema = mongoose.Schema({
     source: String,
 });
 
-module.exports = mongoose.model('myrecipes', myRecipesSchema)
+module.exports = mongoose.model('myrecipes', myRecipesSchema);
