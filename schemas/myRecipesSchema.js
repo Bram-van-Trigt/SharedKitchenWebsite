@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const myRecipesSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
     recipeName: {type: String, required: true},
     description: String,
     preperationTime: Number,
@@ -11,4 +12,4 @@ const myRecipesSchema = mongoose.Schema({
     source: String,
 });
 
-module.exports = mongoose.model('myrecipes', myRecipesSchema);
+module.exports = mongoose.model('myRecipes', myRecipesSchema);

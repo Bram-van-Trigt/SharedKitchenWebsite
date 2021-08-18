@@ -16,8 +16,11 @@ router.get('/', function( req, res, next ) {
 });
 
 router.get('/API', function( req, res, next ) {
-    var myMeals = db.allMeals();
-    res.render('API', { text: myMeals });
+    db.allMeals(renderAPI);
+    function renderAPI(data) {
+        res.render('API', { text: data });
+    }
+    // res.render('API', { text: myMeals });
     //console.log('routes log ' + myMeals);
 });
 

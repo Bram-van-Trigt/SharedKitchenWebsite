@@ -11,34 +11,30 @@ mongoose.connect('mongodb://localhost:27017/SharedKitchenDb', {
     useUnifiedTopology: true
 });
 
-//Functions to retrieve info from databases.
-function allMeals() {
-    myMealsSchema.find(function (err, data){
-        if (err) return console.error(err);
-        console.log(data);
-        idLoop(data);
-    });
+//Re-usable database queries
+
+function allMeals(callback) {
+    myMealsSchema.
+        findOne({}).
+        populate('recipeRef').
+        exec(function(err, data){
+            if (err) return console.log(err);
+            console.log(data);
+            callback(data);
+        });
 }
 
-function oneRecipe(id, callback) {
-    myRecipesSchema.findOne(function (err, data){
-        if (err) return console.error(err);
-        console.log(data);
-        console.log(data.mealName);
-        callback(data);
-    });
-}
-
-function idLoop(data){
-    console.log(data);
-    for (let x in data) {
-        meal = x
-        console.log(meal._id)
+function oneRecipe(search, parameter, callback) {
+    if (parameter == '_id') {
+        myRecipesSchema.findById(search, function (err, data){
+            if (err) return console.error(err);
+            // console.log(data);
+            // console.log(data.recipeName);
+            return data;
+            // callback(data);
+        });
     }
-};
-
-
-
+}
 
 //loop through data from all meals and send to oneRecipe with callback.
 //where do I list the item? Is this another callback? Or async call?
@@ -49,4 +45,3 @@ Then we don't require have te same code multiple times.*/
 //export of functions for use in routes.
 exports.allMeals = allMeals;
 exports.oneRecipe = oneRecipe;
-exports.idLoop = idLoop;
