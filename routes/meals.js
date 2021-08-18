@@ -2,8 +2,12 @@ const { json } = require('express');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const database = require('../database');
+const { stringify } = require('querystring');
+const db = require('../database');
 const myMealsSchema = require('../schemas/myMealsSchema');
+const myRecipesSchema = require('../schemas/myRecipesSchema');
+
+//functions for database
 
 // render routes
 router.get('/', function( req, res, next ) {
@@ -12,20 +16,9 @@ router.get('/', function( req, res, next ) {
 });
 
 router.get('/API', function( req, res, next ) {
-    var myMeals = database.getMeals();
+    var myMeals = db.allMeals();
     res.render('API', { text: myMeals });
-    console.log('routes log ' + myMeals);
-});
-
-router.get('/test', function( req, res, next ) {
-    var myMeals = myMealsSchema.find(function (err, meals){
-        if (err) return console.error(err);
-        console.log(meals)
-        return meals
-    });
-    res.render('API', { text: myMeals });
-    console.log('routes log ' + myMeals);
+    //console.log('routes log ' + myMeals);
 });
 
 module.exports = router;
-
