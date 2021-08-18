@@ -1,18 +1,21 @@
-const { json } = require('express');
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
+const db = require('../database');
+
 
 // render routes
 router.get('/', function( req, res, next ) {
-    var myRecipes = JSON.parse(fs.readFileSync('tempJson/database.json', 'utf-8'));
-    console.log(myRecipes);
-    res.render('myRecipes', {title:'My recipes', header:'My recipes:', tableInput: myRecipes});
+    db.allRecipes(renderRecipes)
+    function renderRecipes(data){
+        res.render('myRecipes', {title:'My recipes', header:'My recipes:', tableInput: data});
+    }
 });
 
 router.get('/API', function( req, res, next ) {
-    var myRecipes = fs.readFileSync('tempJson/database.json', 'utf-8');
-    res.render('API', { text: myRecipes });
+    db.allRecipes(renderRecipes)
+    function renderRecipes(data){
+        res.render('API', { text: data });
+    }
 });
 
 module.exports = router;

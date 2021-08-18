@@ -11,12 +11,20 @@ mongoose.connect('mongodb://localhost:27017/SharedKitchenDb', {
     useUnifiedTopology: true
 });
 
-//Re-usable database queries
-
+//Re-usable database queries.
 function allMeals(callback) {
     myMealsSchema.
         find({}).
         populate('recipeRef').
+        exec(function(err, data){
+            if (err) return console.log(err);
+            callback(data);
+        });
+}
+
+function allRecipes(callback) {
+    myRecipesSchema.
+        find({}).
         exec(function(err, data){
             if (err) return console.log(err);
             callback(data);
@@ -35,12 +43,7 @@ function oneRecipe(search, parameter, callback) {
     }
 }
 
-//loop through data from all meals and send to oneRecipe with callback.
-//where do I list the item? Is this another callback? Or async call?
-
-/*todo: can we create a module in this file with the queries for routes to use?
-Then we don't require have te same code multiple times.*/
-
-//export of functions for use in routes.
+//export of re-usable functions for use in routes.
 exports.allMeals = allMeals;
+exports.allRecipes = allRecipes;
 exports.oneRecipe = oneRecipe;

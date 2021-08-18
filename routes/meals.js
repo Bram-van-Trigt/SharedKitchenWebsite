@@ -1,11 +1,6 @@
-const { json } = require('express');
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const { stringify } = require('querystring');
 const db = require('../database');
-const myMealsSchema = require('../schemas/myMealsSchema');
-const myRecipesSchema = require('../schemas/myRecipesSchema');
 
 //functions for database
 
