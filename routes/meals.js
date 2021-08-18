@@ -11,8 +11,10 @@ const myRecipesSchema = require('../schemas/myRecipesSchema');
 
 // render routes
 router.get('/', function( req, res, next ) {
-    var myMeals = JSON.parse(fs.readFileSync('tempJson/myMeals.json', 'utf-8'));
+    db.allMeals(renderMyMeals);
+    function renderMyMeals(myMeals){
     res.render('myMeals', {title:'My meals', header:'AVAILABLE MEALS:', tableInput: myMeals});
+    }
 });
 
 router.get('/API', function( req, res, next ) {
@@ -20,8 +22,6 @@ router.get('/API', function( req, res, next ) {
     function renderAPI(data) {
         res.render('API', { text: data });
     }
-    // res.render('API', { text: myMeals });
-    //console.log('routes log ' + myMeals);
 });
 
 module.exports = router;

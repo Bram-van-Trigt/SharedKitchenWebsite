@@ -15,11 +15,10 @@ mongoose.connect('mongodb://localhost:27017/SharedKitchenDb', {
 
 function allMeals(callback) {
     myMealsSchema.
-        findOne({}).
+        find({}).
         populate('recipeRef').
         exec(function(err, data){
             if (err) return console.log(err);
-            console.log(data);
             callback(data);
         });
 }

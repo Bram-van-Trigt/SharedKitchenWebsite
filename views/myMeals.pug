@@ -1,14 +1,14 @@
 mixin recipe(recipeData, castingData)
   tr 
-    td.recipe #{recipeData.recipeName}
+    td.recipe #{recipeData.mealName}
     td
       input(type="button",name=recipeData.id value= castingData)
   tr 
-    td.prep prep: #{recipeData.preperationTime}min 
-    td.cook cook: #{recipeData.cookingTime}min 
-    td.persons pers: #{recipeData.persons}
+    td.prep prep: #{recipeData.recipeRef.preperationTime}min 
+    td.cook cook: #{recipeData.recipeRef.cookingTime}min 
+    td.persons pers: #{recipeData.recipeRef.persons}
   tr 
-    td.desc(colspan='3') #{recipeData.description} 
+    td.desc(colspan='3') #{recipeData.recipeRef.description} 
 
 html
   head
