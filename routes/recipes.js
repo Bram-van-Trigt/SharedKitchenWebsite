@@ -22,11 +22,12 @@ router.get('/newRecipe', function( req, res, next ) {
 });
 
 router.post('/newRecipe', function(req, res, next){
-    var form = req.body
-    console.log(form)
-    // var recipeName = req.body.recipeName;
-    // var description = req.body.description;
-    // console.log('Recipe: ' + recipeName + 'Description:' + description);
+    var formData = req.body
+    console.log(formData);
+    db.addRecipe(formData);
+    function confirmation(){
+        res.render('confirmRecipe', {});
+    }
 });
 
 router.get('/confirmRecipe', function( req, res, next ){

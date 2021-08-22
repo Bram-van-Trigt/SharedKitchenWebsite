@@ -2,7 +2,7 @@ body
     form(action='/recipes/newRecipe', method= 'POST')
         p
         |   Recipe:
-        input(type='text', name='recipeName', value='')
+        input(type='text', name='recipeName', value='', required)
         p 
         |   Description:
         input(type='text', name='description', value='')
@@ -14,15 +14,15 @@ body
         input(type='number', name='cookingTime', value='')
         p
         |   Persons:
-        input(type='number', name='recipeName', value='')
+        input(type='number', name='persons', value='')
+        p   Cooking instruction:  
+        p
+        textarea(name="instructions", cols="40", rows="10", required)
         p
         |   Ingredients:
-        input(type='text', name='ingredients', value='')
-        p
-        |   Cooking instructions: 
-        input(type='text', name='cookingInstructions', value='')
+        input(type='text', name='ingredients', value='', required)
         p
         |   Source:
         input(type='text', name='source', value='')
-        p 
-        input(type='submit', value='Submit')
+        p
+        input(type='submit', value='Add recipe')

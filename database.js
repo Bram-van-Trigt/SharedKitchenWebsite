@@ -53,8 +53,27 @@ function addMeal(recipeObject) {
     });
 }
 
+function addRecipe(Data) {
+    console.log(Data);
+    const newRecipe = new myRecipesSchema({
+        recipeName: Data.recipeName,
+        description: data.description,
+        preperationTime: data.preperationTime,
+        cookingTime: data.cookingTime,
+        persons: data.persons,
+        instructions: data.instructions,
+        ingredients: data.ingredients,
+        source: data.source
+    });
+    newRecipe.save(function (err){
+        if (err) return console.error(err);
+        else confirmation(data);
+    });
+}
+
 //export of re-usable functions for use in routes.
 exports.allMeals = allMeals;
 exports.allRecipes = allRecipes;
 exports.oneRecipe = oneRecipe;
 exports.addMeal = addMeal;
+exports.addRecipe = addRecipe;

@@ -7,7 +7,7 @@ var port = 3000;
 session = require('express-session');
 
 // mongo database
-/*todo: mongo.js is executed this way. 
+/*todo: database.js is executed this way. 
 It seems that this is only necessary in the routes that use the monge db data.*/
 const database = require('./database')
 
@@ -19,6 +19,7 @@ var recipesRouter = require('./routes/recipes');
 var app = express();
 app.use(cors());
 app.use(express.urlencoded());
+// app.use(express.json());
 
 // view engine setup
 app.set('view engine', 'pug');
