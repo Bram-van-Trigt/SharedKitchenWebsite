@@ -43,7 +43,18 @@ function oneRecipe(search, parameter, callback) {
     }
 }
 
+function addMeal(recipeObject) {
+    const newMeal = new myMealsSchema({
+        mealName: result.recipeName,
+        recipeRef: result._id
+        });
+    newMeal.save(function (err){
+    if (err) return console.error(err);
+    });
+}
+
 //export of re-usable functions for use in routes.
 exports.allMeals = allMeals;
 exports.allRecipes = allRecipes;
 exports.oneRecipe = oneRecipe;
+exports.addMeal = addMeal;

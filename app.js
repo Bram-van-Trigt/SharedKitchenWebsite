@@ -18,6 +18,7 @@ var recipesRouter = require('./routes/recipes');
 
 var app = express();
 app.use(cors());
+app.use(express.urlencoded());
 
 // view engine setup
 app.set('view engine', 'pug');
@@ -29,11 +30,7 @@ app.set('views',path.join(__dirname , 'views'));
 app.use('/meals', mealsRouter);
 app.use('/recipes', recipesRouter);
 
-// Simple test case for engine
-// app.get('/', (req, res) =>{
-//     res.render('index');
-// });
-
+// Server and Port
 app.listen(port, 'localhost', function(error) {
     if (error){
         console.log('Something went wrong', error);

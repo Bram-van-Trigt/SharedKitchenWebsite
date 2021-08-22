@@ -1,0 +1,28 @@
+body
+    form(action='/recipes/newRecipe', method= 'POST')
+        p
+        |   Recipe:
+        input(type='text', name='recipeName', value='')
+        p 
+        |   Description:
+        input(type='text', name='description', value='')
+        p
+        |   Preperation time:
+        input(type='number', name='preperationTime', value='')
+        p 
+        |   Cooking time:
+        input(type='number', name='cookingTime', value='')
+        p
+        |   Persons:
+        input(type='number', name='recipeName', value='')
+        p
+        |   Ingredients:
+        input(type='text', name='ingredients', value='')
+        p
+        |   Cooking instructions: 
+        input(type='text', name='cookingInstructions', value='')
+        p
+        |   Source:
+        input(type='text', name='source', value='')
+        p 
+        input(type='submit', value='Submit')

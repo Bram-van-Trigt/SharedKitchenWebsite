@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../database');
+const { json } = require('express');
 
 //functions for database
 
@@ -15,7 +16,8 @@ router.get('/', function( req, res, next ) {
 router.get('/API', function( req, res, next ) {
     db.allMeals(renderAPI);
     function renderAPI(data) {
-        res.render('API', { text: data });
+        var myMeals = JSON.stringify(data)
+        res.render('API', { text: myMeals });
     }
 });
 
