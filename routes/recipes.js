@@ -25,13 +25,6 @@ router.post('/newRecipe', function(req, res, next){
     var formData = req.body
     console.log(formData);
     db.addRecipe(formData);
-    function confirmation(){
-        res.render('confirmRecipe', {});
-    }
-});
-
-router.get('/confirmRecipe', function( req, res, next ){
-
 });
 
 module.exports = router;

@@ -1,3 +1,12 @@
+script.  
+    function addIngredient(){
+        // First create a DIV element.
+        var newInput = document.createElement('div');
+        // Then add the content of the element.
+        newInput.innerHTML = "<input ( type='text', name='quantity', value='Quantity')><input ( type='text', name='ingredient', value= 'Ingredient')><p></p>";
+        // Finally put it where it is supposed to appear.
+        document.getElementById("newIngredient").appendChild(newInput);
+    }
 body
     form(action='/recipes/newRecipe', method= 'POST')
         p
@@ -17,12 +26,23 @@ body
         input(type='number', name='persons', value='')
         p   Cooking instruction:  
         p
-        textarea(name="instructions", cols="40", rows="10", required)
+        textarea(name='Part1', cols='60', rows='5', required)
         p
-        |   Ingredients:
-        input(type='text', name='ingredients', value='', required)
+        p   Ingredients:
+        input(type='text', name='quantity', value= 'Quantity' required)
+        input(type='text', name='ingredient', value='Ingredient' required)
+        p
+        input(type='text', name='quantity', value= 'Quantity' required)
+        input(type='text', name='ingredient', value='Ingredient' required)
+        p
+        input(type='text', name='quantity', value= 'Quantity' required)
+        input(type='text', name='ingredient', value='Ingredient' required)
+        p
+        div(id="newIngredient")
+        input(type='button', value='More Ingredients', onclick="addIngredient()")
         p
         |   Source:
         input(type='text', name='source', value='')
         p
-        input(type='submit', value='Add recipe')
+        input(type='submit', value='Submit recipe')
+

@@ -53,21 +53,29 @@ function addMeal(recipeObject) {
     });
 }
 
-function addRecipe(Data) {
-    console.log(Data);
+function addRecipe(data) {
+    console.log(data);
+    const id = mongoose.Types.ObjectId();
+    var allIngredients = {};
+    for (var n in data.ingredient) {
+       if(data.ingredient[n] != 'Ingredient'){
+        allIngredients[data.ingredient[n]] = data.quantity[n];
+       } 
+    }
+    console.log(allIngredients);
     const newRecipe = new myRecipesSchema({
-        recipeName: Data.recipeName,
+        _id: id,
+        recipeName: data.recipeName,
         description: data.description,
         preperationTime: data.preperationTime,
         cookingTime: data.cookingTime,
         persons: data.persons,
         instructions: data.instructions,
-        ingredients: data.ingredients,
+        ingredients: allIngredients,  //this should be an object instead of a string I think
         source: data.source
     });
     newRecipe.save(function (err){
         if (err) return console.error(err);
-        else confirmation(data);
     });
 }
 

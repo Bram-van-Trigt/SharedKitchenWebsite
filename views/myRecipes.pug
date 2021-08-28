@@ -2,7 +2,7 @@ mixin recipe(recipeData)
   tr 
     td.recipe #{recipeData.recipeName}
     td
-      input(type="button", name=newRecipe, value= "Add to my meals", onclick="http://localhost:3000/recipes/addmeal")
+      input(type="button", name=newRecipe, value= "Add to my meals", onclick="window.location.href='/recipes/addmeal'")
   tr 
     td.prep prep: #{recipeData.preperationTime}min 
     td.cook cook: #{recipeData.cookingTime}min 
@@ -21,7 +21,7 @@ html
         tr 
           th.tableheader(colspan='2')= header
           th.tableheader
-            input(type="button", value="Add new Recipe", href="http://localhost:3000/recipes/addrecipe")
+            input(type="button", value="Add new Recipe", onclick="window.location.href='/recipes/newRecipe'")
       tbody
         for meal in tableInput
           +recipe(meal, casting)
