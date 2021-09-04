@@ -11,11 +11,11 @@ mixin recipe(recipeData)
     td.desc(colspan='3') #{recipeData.description} 
 html
   head
-    title= title
+    title= Recipes
     style
-      include ../bootstrap/css/bootstrap.css
+      include ../public/bootstrap/css/bootstrap.min.css
   body
-    //- include ./partials/header.pug
+    include ./partials/header.pug
     table
       thead 
         tr 
@@ -25,4 +25,4 @@ html
       tbody
         for meal in tableInput
           +recipe(meal, casting)
-    script(src="../bootstrap/js/bootstrap.js")  
+    script(src="bootstrap/js/bootstrap.min.js")  
