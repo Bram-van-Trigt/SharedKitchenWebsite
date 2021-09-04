@@ -71,7 +71,7 @@ function addRecipe(data) {
         cookingTime: data.cookingTime,
         persons: data.persons,
         instructions: data.instructions,
-        ingredients: allIngredients,  //this should be an object instead of a string I think
+        ingredients: allIngredients,
         source: data.source
     });
     newRecipe.save(function (err){
