@@ -1,27 +1,38 @@
-mixin recipe(recipeData)
-    div(class="container-fluid")
-      //- div(class="border border-3 rounded")
-      div(class="row")
-        div(class="col-9") #{recipeData.recipeName}
-        div(class="col")
-          input(type="button", name=newRecipe, value= "Add to my meals", onclick="window.location.href='/recipes/addmeal'")
-      div(class="row")
-        div(class="col") prep: #{recipeData.preperationTime}min 
-        div(class="col") cook: #{recipeData.cookingTime}min 
-        div(class="col") #{recipeData.persons}persons
-      div(class="row")
-        div(class="col") #{recipeData.description}
-    p
+mixin recipes(recipeData)
+  div(class="col-sm-6")
+    div(class="card h-100")
+      h3(class="card-header") #{recipeData.recipeName}
+      div(class="card-body")
+        h5(class="card-title") #{recipeData.description}
+        div(class="card-text")
+          div(class="row")
+            div(class="col-sm-6") Preperation: #{recipeData.preperationTime}min 
+            div(class="col-sm-6") Cooking: #{recipeData.cookingTime}min 
+          div(class="row")
+            div(class="col-sm-6") #{recipeData.persons} persons
+      div(class="card-footer")
+        a(onclick="window.location.href='/recipes/addmeal'", class="btn btn-light btn-sm") Add to meals
 html
   head
     title= Recipes
     style
+      //- Boota=strap and custom css files
       include ../public/bootstrap/css/bootstrap.min.css
-      //- include ./styles/custom.css
-  body(class= "container-sm" style="background-color: #222629; color: #FFFFFF;")
+      include ./styles/custom.css
+
+  body(class= "container-fluid" style="background-color: #222629;")
     include ./partials/header.pug
+    
+    //- Title container of currentpage
     h1(style="color: #6A6E71;")= header
-    input(type="button", value="Add new Recipe", onclick="window.location.href='/recipes/newRecipe'")
-    for meal in tableInput
-      +recipe(meal, casting)
+      a(onclick="window.location.href='/recipes/newRecipe'", class="btn btn-light") New recipe
+      //- input(type="button", value="Add new Recipe", onclick="window.location.href='/recipes/newRecipe'")
+    
+
+    //- loops through recipes and reference mixin above
+    div(class="row")
+        for recipe in tableInput
+          +recipes(recipe, casting)
+
+    //- bootstrap javascript file
     script(src="bootstrap/js/bootstrap.min.js")  

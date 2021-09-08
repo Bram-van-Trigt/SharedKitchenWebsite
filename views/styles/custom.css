@@ -1,9 +1,24 @@
+/* Bootstrap Cards Style */
+.card {
+    color: #FFFFFF;
+    background-color: #474A4F;
+    border-color: #87C232;
+    border-width: 1;
+}
 
-// Default variables overide.
+.card-body{
+    color: #FFFFFF;
+    background-color: #222629;
+}
 
+.card-footer{
+    background-color: #222629;
+}
 
-// Import of bootstrap default styles and funtctions.
-@import url("../public/bootstrap/css/bootstrap.min.css");
+/* Bootstrap button style  */
+.btn{
+    background-color: #87C232;
+    border-color: #87C232;
+    
+}
 
-// Additional custom code.
-$body-bg: #222629;
