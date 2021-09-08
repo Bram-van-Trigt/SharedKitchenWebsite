@@ -1,28 +1,27 @@
 mixin recipe(recipeData)
-  tr 
-    td.recipe #{recipeData.recipeName}
-    td
-      input(type="button", name=newRecipe, value= "Add to my meals", onclick="window.location.href='/recipes/addmeal'")
-  tr 
-    td.prep prep: #{recipeData.preperationTime}min 
-    td.cook cook: #{recipeData.cookingTime}min 
-    td.persons pers: #{recipeData.persons}
-  tr 
-    td.desc(colspan='3') #{recipeData.description} 
+    div(class="container-fluid")
+      //- div(class="border border-3 rounded")
+      div(class="row")
+        div(class="col-9") #{recipeData.recipeName}
+        div(class="col")
+          input(type="button", name=newRecipe, value= "Add to my meals", onclick="window.location.href='/recipes/addmeal'")
+      div(class="row")
+        div(class="col") prep: #{recipeData.preperationTime}min 
+        div(class="col") cook: #{recipeData.cookingTime}min 
+        div(class="col") #{recipeData.persons}persons
+      div(class="row")
+        div(class="col") #{recipeData.description}
+    p
 html
   head
     title= Recipes
     style
       include ../public/bootstrap/css/bootstrap.min.css
-  body
+      //- include ./styles/custom.css
+  body(class= "container-sm" style="background-color: #222629; color: #FFFFFF;")
     include ./partials/header.pug
-    table
-      thead 
-        tr 
-          th.tableheader(colspan='2')= header
-          th.tableheader
-            input(type="button", value="Add new Recipe", onclick="window.location.href='/recipes/newRecipe'")
-      tbody
-        for meal in tableInput
-          +recipe(meal, casting)
+    h1(style="color: #6A6E71;")= header
+    input(type="button", value="Add new Recipe", onclick="window.location.href='/recipes/newRecipe'")
+    for meal in tableInput
+      +recipe(meal, casting)
     script(src="bootstrap/js/bootstrap.min.js")  

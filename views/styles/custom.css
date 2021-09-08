@@ -1,0 +1,9 @@
+
+// Default variables overide.
+
+
+// Import of bootstrap default styles and funtctions.
+@import url("../public/bootstrap/css/bootstrap.min.css");
+
+// Additional custom code.
+$body-bg: #222629;

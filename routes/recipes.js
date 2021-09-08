@@ -6,7 +6,7 @@ const db = require('../database');
 router.get('/', function( req, res, next ) {
     db.allRecipes(renderRecipes);
     function renderRecipes(data){
-        res.render('myRecipes', {title:'My recipes', header:'My recipes:', tableInput: data});
+        res.render('myRecipes', {title:'Recipes', header:'RECIPES:', tableInput: data});
     }
 });
 
