@@ -11,7 +11,8 @@ session = require('express-session');
 It seems that this is only necessary in the routes that use the monge db data.*/
 const database = require('./database')
 
-// require route files
+// Routing files
+var homepage = require('./routes/homepage')
 var mealsRouter = require('./routes/meals');
 var recipesRouter = require('./routes/recipes');
 //const { use } = require('./routes/recipes');
@@ -28,6 +29,7 @@ app.set('views',path.join(__dirname , 'views'));
 
 
 // execute routes from adress
+app.use('/', homepage);
 app.use('/meals', mealsRouter);
 app.use('/recipes', recipesRouter);
 
