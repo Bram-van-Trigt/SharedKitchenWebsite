@@ -1,0 +1,38 @@
+//- Mixin for the cards with recipes
+mixin recipes(recipeData)
+  div(class="col-sm-6 col-md-4 mt-4")
+    div(class="card h-100")
+      h3(class="card-header") #{recipeData.recipeName}
+      div(class="card-body")
+        h5(class="card-title") #{recipeData.description}
+        div(class="card-text")
+          div(class="row")
+            div(class="col-sm-6") Preperation: #{recipeData.preperationTime}min 
+            div(class="col-sm-6") Cooking: #{recipeData.cookingTime}min 
+          div(class="row")
+            div(class="col-sm-6") #{recipeData.persons} persons
+      div(class="card-footer")
+        a(onclick="window.location.href='/recipes/addmeal'", class="btn btn-light btn-sm") Add to meals
+html
+  head
+    title= recipes
+    style
+      //- Bootstrap and custom css files
+      include ../public/bootstrap/css/bootstrap.min.css
+      include ./styles/custom.css
+  
+  //- body to set background color and include website header
+  body(class= "container-fluid" style="background-color: #222629;")
+    include ./partials/header.pug
+    
+    //- Subheader for currentpage
+    h1(class="text-center" style="color: #87C232")= header
+    a(onclick="window.location.href='/recipes/newRecipe'", class="container-fluid btn btn-light") New recipe
+    
+    //- loops through recipes from database and reference to mixin above
+    div(class="row")
+        for recipe in tableInput
+          +recipes(recipe, casting)
+
+    //- bootstrap javascript file
+    script(src="bootstrap/js/bootstrap.min.js")  
