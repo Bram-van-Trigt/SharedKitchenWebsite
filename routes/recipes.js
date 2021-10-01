@@ -6,8 +6,14 @@ const db = require('../database');
 router.get('/', function( req, res, next ) {
     db.allRecipes(renderRecipes);
     function renderRecipes(data){
-        res.render('myRecipes', {title:'Recipes', header:'RECIPES:', tableInput: data});
+        res.render('myRecipes', {title:'Recipes', header:'Recipes', tableInput: data});
     }
+});
+
+router.post('/', function(req, res, next){
+    var formData = req.body
+    console.log(formData);
+    db.oneRecipe(formData.recipe_id, '_id', db.addMeal)
 });
 
 router.get('/API', function( req, res, next ) {

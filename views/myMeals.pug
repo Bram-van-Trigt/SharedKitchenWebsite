@@ -1,26 +1,45 @@
-mixin recipe(recipeData, castingData)
-  tr 
-    td.recipe #{recipeData.mealName}
-    td
-      input(type="button",name=recipeData.id value= castingData)
-  tr 
-    td.prep prep: #{recipeData.recipeRef.preperationTime}min 
-    td.cook cook: #{recipeData.recipeRef.cookingTime}min 
-    td.persons pers: #{recipeData.recipeRef.persons}
-  tr 
-    td.desc(colspan='3') #{recipeData.recipeRef.description} 
-
+//- Mixin for the cards with meals
+mixin meals(mealData)
+  div(class="col-sm-10 col-md-6 mt-4")
+    div(class="card h-100")
+      h3(class="card-header") #{mealData.mealName}
+      div(class="card-body")
+        h5(class="card-title") #{mealData.recipeRef.description}
+        div(class="card-text")
+          div(class="row")
+            div(class="col-sm-6") Preperation: #{mealData.recipeRef.preperationTime}min 
+            div(class="col-sm-6") Cooking: #{mealData.recipeRef.cookingTime}min 
+          div(class="row")
+            div(class="col-sm-6") #{mealData.recipeRef.persons} persons
+      div(class="card-footer")
+        form(action='/meals', method= 'POST')
+          button(type="submit", class="btn btn-light btn-sm", name="meal_id" value=mealData._id) Cast to MagicMirror
 html
   head
-    title= title
+    title= Meals
     style
+      //- Bootstrap and custom css files
       include ../public/bootstrap/css/bootstrap.min.css
-  body
+      include ./styles/custom.css
+  
+  //- body to set background color and include website header
+  body(class= "container-fluid" style="background-color: #222629;")
     include ./partials/header.pug
-    table
-      thead 
-        tr 
-          th.tableheader(colspan='3')= header
+    
+    //- Subheader for currentpage
+    h1(class="text-center" style="color: #87C232")= header
+    
+    //- loops through meals from database and reference to mixin above
+    div(class="row")
+        for meal in tableInput
+          +meals(meal, casting)
+
+    //- bootstrap javascript file
+    script(src="bootstrap/js/bootstrap.min.js") 
+
+
+
+//-
       tbody
         for meal in tableInput
           if meal.display

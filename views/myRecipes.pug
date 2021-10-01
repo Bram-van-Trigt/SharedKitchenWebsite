@@ -1,5 +1,6 @@
+//- Mixin for the cards with recipes
 mixin recipes(recipeData)
-  div(class="col-sm-6")
+  div(class="col-sm-6 col-md-4 mt-4")
     div(class="card h-100")
       h3(class="card-header") #{recipeData.recipeName}
       div(class="card-body")
@@ -11,25 +12,25 @@ mixin recipes(recipeData)
           div(class="row")
             div(class="col-sm-6") #{recipeData.persons} persons
       div(class="card-footer")
-        a(onclick="window.location.href='/recipes/addmeal'", class="btn btn-light btn-sm") Add to meals
+        form(action='/recipes', method= 'POST')
+          button(type="submit", class="btn btn-light btn-sm", name="recipe_id" value=recipeData._id) Add to meals
 html
   head
-    title= Recipes
+    title= recipes
     style
-      //- Boota=strap and custom css files
+      //- Bootstrap and custom css files
       include ../public/bootstrap/css/bootstrap.min.css
       include ./styles/custom.css
-
+  
+  //- body to set background color and include website header
   body(class= "container-fluid" style="background-color: #222629;")
     include ./partials/header.pug
     
-    //- Title container of currentpage
-    h1(style="color: #6A6E71;")= header
-      a(onclick="window.location.href='/recipes/newRecipe'", class="btn btn-light") New recipe
-      //- input(type="button", value="Add new Recipe", onclick="window.location.href='/recipes/newRecipe'")
+    //- Subheader for currentpage
+    h1(class="text-center" style="color: #87C232")= header
+    a(onclick="window.location.href='/recipes/newRecipe'", class="container-fluid btn btn-light") New recipe
     
-
-    //- loops through recipes and reference mixin above
+    //- loops through recipes from database and reference to mixin above
     div(class="row")
         for recipe in tableInput
           +recipes(recipe, casting)

@@ -9,7 +9,7 @@ const { json } = require('express');
 router.get('/', function( req, res, next ) {
     db.allMeals(renderMyMeals);
     function renderMyMeals(myMeals){
-    res.render('myMeals', {title:'My meals', header:'AVAILABLE MEALS:', tableInput: myMeals});
+    res.render('myMeals', {title:'My meals', header:'Meals', tableInput: myMeals});
     }
 });
 

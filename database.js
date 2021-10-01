@@ -14,7 +14,7 @@ mongoose.connect('mongodb://localhost:27017/SharedKitchenDb', {
 //Re-usable database queries.
 function allMeals(callback) {
     myMealsSchema.
-        find({}).
+        find({}, null, {sort: {mealName: 1}}).
         populate('recipeRef').
         exec(function(err, data){
             if (err) return console.log(err);
@@ -24,7 +24,7 @@ function allMeals(callback) {
 
 function allRecipes(callback) {
     myRecipesSchema.
-        find({}).
+        find({}, null, {sort: {recipeName: 1}}).
         exec(function(err, data){
             if (err) return console.log(err);
             callback(data);
@@ -35,21 +35,21 @@ function oneRecipe(search, parameter, callback) {
     if (parameter == '_id') {
         myRecipesSchema.findById(search, function (err, data){
             if (err) return console.error(err);
-            // console.log(data);
-            // console.log(data.recipeName);
-            return data;
-            // callback(data);
+            callback(data);
         });
     }
 }
 
 function addMeal(recipeObject) {
+    const id = mongoose.Types.ObjectId();
     const newMeal = new myMealsSchema({
-        mealName: result.recipeName,
-        recipeRef: result._id
+        _id: id,
+        mealName: recipeObject.recipeName,
+        recipeRef: recipeObject._id
         });
     newMeal.save(function (err){
     if (err) return console.error(err);
+    else console.log('Meal Added');
     });
 }
 
