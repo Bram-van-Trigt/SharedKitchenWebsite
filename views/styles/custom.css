@@ -1,3 +1,4 @@
+
 /* Bootstrap navbar style */
 .navbar-text {
     color: #FFFFFF;
@@ -16,13 +17,16 @@
     color: #FFFFFF;
     background-color: #222629;
 }
+
 .card-footer{
     background-color: #222629;
     border-top: #222629;
+
 }
 
 /* Bootstrap button style  */
 .btn{
+
     color: #222629;
     background-color: #87C232;
     border-color: #87C232;  

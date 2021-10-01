@@ -1,3 +1,4 @@
+
 //- Mixin for the cards with recipes
 mixin recipes(recipeData)
   div(class="col-sm-6 col-md-4 mt-4")
@@ -30,6 +31,7 @@ html
     a(onclick="window.location.href='/recipes/newRecipe'", class="container-fluid btn btn-light") New recipe
     
     //- loops through recipes from database and reference to mixin above
+
     div(class="row")
         for recipe in tableInput
           +recipes(recipe, casting)
