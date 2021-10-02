@@ -13,12 +13,26 @@ router.get('/', function( req, res, next ) {
     }
 });
 
+router.post('/', function( req, res, next ){
+    //Check button function and start action
+    var action = req.body;
+    console.log(action);
+    if ('cast' in action);
+        console.log('start casting'); //kickoff casting function here
+    if ('remove' in action);
+        console.log('remove meal'); //start removal from meals db here
+});
+
 router.get('/API', function( req, res, next ) {
     db.allMeals(renderAPI);
     function renderAPI(data) {
         var myMeals = JSON.stringify(data)
         res.render('API', { text: myMeals });
     }
+});
+
+router.get('/casting', function ( req, res, next){
+    res.render('casting')
 });
 
 module.exports = router;

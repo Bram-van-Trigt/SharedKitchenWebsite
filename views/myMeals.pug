@@ -12,8 +12,9 @@ mixin meals(mealData)
           div(class="row")
             div(class="col-sm-6") #{mealData.recipeRef.persons} persons
       div(class="card-footer")
-        form(action='/meals', method= 'POST')
-          button(type="submit", class="btn btn-light btn-sm", name="meal_id" value=mealData._id) Cast to MagicMirror
+        form(action="/meals", method="POST", id="cast", target="_self")
+          button(type="cast", class="btn btn-light btn-sm", name="cast", value=mealData._id) Cast to MagicMirror
+          button(type="remove", class="btn btn-light btn-sm", name="remove", value=mealData._id) Remove
 html
   head
     title= Meals

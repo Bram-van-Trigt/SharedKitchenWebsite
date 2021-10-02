@@ -12,7 +12,6 @@ router.get('/', function( req, res, next ) {
 
 router.post('/', function(req, res, next){
     var formData = req.body
-    console.log(formData);
     db.oneRecipe(formData.recipe_id, '_id', db.addMeal)
 });
 
@@ -29,7 +28,6 @@ router.get('/newRecipe', function( req, res, next ) {
 
 router.post('/newRecipe', function(req, res, next){
     var formData = req.body
-    console.log(formData);
     db.addRecipe(formData);
 });
 
