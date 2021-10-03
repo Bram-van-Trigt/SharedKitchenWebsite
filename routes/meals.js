@@ -14,13 +14,16 @@ router.get('/', function( req, res, next ) {
 });
 
 router.post('/', function( req, res, next ){
-    //Check button function and start action
+    //Check button function and start button action
     var action = req.body;
     console.log(action);
-    if ('cast' in action);
+    if ('cast' in action){
         console.log('start casting'); //kickoff casting function here
-    if ('remove' in action);
-        console.log('remove meal'); //start removal from meals db here
+    }
+    if ('remove' in action);{
+        const removeId = { '_id' : action.remove};
+        db.removeMeal(removeId);
+    }
 });
 
 router.get('/API', function( req, res, next ) {

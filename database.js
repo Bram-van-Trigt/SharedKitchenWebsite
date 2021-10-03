@@ -39,7 +39,7 @@ function oneRecipe(search, parameter, callback) {
         });
     }
 }
-
+//add recipe to meal db
 function addMeal(recipeObject) {
     const id = mongoose.Types.ObjectId();
     const newMeal = new myMealsSchema({
@@ -53,6 +53,20 @@ function addMeal(recipeObject) {
     });
 }
 
+//remove meal
+function removeMeal(mealId){
+    console.log(mealId);
+    myMealsSchema.deleteOne(mealId, function(err){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log('meal deleted');
+        }
+    });
+}
+
+//new recipes added
 function addRecipe(data) {
     console.log(data);
     const id = mongoose.Types.ObjectId();
@@ -84,4 +98,5 @@ exports.allMeals = allMeals;
 exports.allRecipes = allRecipes;
 exports.oneRecipe = oneRecipe;
 exports.addMeal = addMeal;
+exports.removeMeal = removeMeal;
 exports.addRecipe = addRecipe;
