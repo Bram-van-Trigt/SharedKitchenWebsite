@@ -18,9 +18,10 @@ router.post('/', function( req, res, next ){
     var action = req.body;
     console.log(action);
     if ('cast' in action){
-        console.log('start casting'); //kickoff casting function here
+        const updateId = {'id': action.cast};
+        db.updateMeal(updateId, {'cast': true});
     }
-    if ('remove' in action);{
+    if ('remove' in action){
         const removeId = { '_id' : action.remove};
         db.removeMeal(removeId);
     }
@@ -28,7 +29,7 @@ router.post('/', function( req, res, next ){
 
 router.get('/API', function( req, res, next ) {
     db.allMeals(renderAPI);
-    function renderAPI(data) {
+    function renderAPI(data){
         var myMeals = JSON.stringify(data)
         res.render('API', { text: myMeals });
     }
