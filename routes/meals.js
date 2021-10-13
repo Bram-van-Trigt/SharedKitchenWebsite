@@ -18,7 +18,7 @@ router.post('/', function( req, res, next ){
     var action = req.body;
     console.log(action);
     if ('cast' in action){
-        const updateId = {'id': action.cast};
+        const updateId = {'_id': action.cast};
         db.updateMeal(updateId, {'cast': true});
     }
     if ('remove' in action){

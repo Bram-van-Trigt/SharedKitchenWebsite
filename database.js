@@ -89,7 +89,6 @@ function addRecipe(data) {
         allIngredients[data.ingredient[n]] = data.quantity[n];
        } 
     }
-    console.log(allIngredients);
     const newRecipe = new myRecipesSchema({
         _id: id,
         recipeName: data.recipeName,
