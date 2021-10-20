@@ -19,12 +19,19 @@ router.post('/', function( req, res, next ){
     console.log(action);
     if ('cast' in action){
         const updateId = {'_id': action.cast};
-        db.updateMeal(updateId, {'cast': true});
+        db.updateMeal(updateId, {'cast': true}, castResponse);
     }
     if ('remove' in action){
         const removeId = { '_id' : action.remove};
         db.removeMeal(removeId);
     }
+    function castResponse(succes){
+        if(succes == true){
+            res.redirect('Casting on magic mirror')
+        }
+        else res.render('error', {message: 'Oops, something went wrong!'})
+    }
+
 });
 
 router.get('/API', function( req, res, next ) {

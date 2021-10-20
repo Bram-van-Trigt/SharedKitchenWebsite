@@ -1,15 +1,26 @@
+const express = require('express');
+const router = express.Router();
 const mongoose = require('mongoose');
 const { json } = require('express');
 
 //Mongoose schema's.
-const myRecipesSchema = require('./schemas/myRecipesSchema');
-const myMealsSchema = require('./schemas/myMealsSchema');
+const myRecipesSchema = require('../schemas/myRecipesSchema');
+const myMealsSchema = require('../schemas/myMealsSchema');
 
 //Connection to mongodb.
 mongoose.connect('mongodb://localhost:27017/SharedKitchenDb', {
     useNewUrlParser: true, 
     useUnifiedTopology: true
 });
+
+//Routes for database calls
+router.get('/recipes', function( req, res, next ) {
+    allRecipes(sendRecipes);
+    function sendRecipes(data){
+        res.send(data);
+    }
+});
+
 
 //Re-usable database queries.
 function allMeals(callback) {
@@ -108,11 +119,4 @@ function addRecipe(data) {
     });
 }
 
-//export of re-usable functions for use in routes.
-exports.allMeals = allMeals;
-exports.allRecipes = allRecipes;
-exports.oneRecipe = oneRecipe;
-exports.addMeal = addMeal;
-exports.updateMeal = updateMeal;
-exports.removeMeal = removeMeal;
-exports.addRecipe = addRecipe;
+module.exports = router;

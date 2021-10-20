@@ -15,6 +15,7 @@ const database = require('./database')
 var homepage = require('./routes/homepage')
 var mealsRouter = require('./routes/meals');
 var recipesRouter = require('./routes/recipes');
+var databaseRouter = require('./routes/database');
 //const { use } = require('./routes/recipes');
 
 var app = express();
@@ -32,6 +33,7 @@ app.set('views',path.join(__dirname , 'views'));
 app.use('/', homepage);
 app.use('/meals', mealsRouter);
 app.use('/recipes', recipesRouter);
+app.use('/database', databaseRouter);
 
 // Server and Port
 app.listen(port, 'localhost', function(error) {
