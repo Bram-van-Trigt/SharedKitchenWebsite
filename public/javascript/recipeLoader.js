@@ -89,12 +89,12 @@ var RecipeCard = class {
             cardFooter.setAttribute("class", "card-footer");
             box.appendChild(cardFooter);
 
-            // //will show the buy button of the product
+            //will show the buy button of the product
             var button = document.createElement('button');
             button.setAttribute("id", _id);
             button.setAttribute("class", "btn btn-light btn-sm")
             button.addEventListener("click", function(e){
-                buyProduct(e.target.id);
+                addToMeals(e.target.id);
             });
             button.appendChild(document.createTextNode("Add to meals"));
             cardFooter.appendChild(button);
@@ -103,3 +103,19 @@ var RecipeCard = class {
         };
     };
 };
+
+//Adds recipe to meals database, function related to button.
+function addToMeals(id) {
+    $.ajax({
+        type: 'post',
+        url: './recipes',
+        dataType: 'json',
+        data: {"recipe_id": id}
+    })
+        .done(function (data) {
+            console.log(data)
+        })
+        .fail(function (jqXHR, textStatus, err) {
+            console.log('AJAX error response:', textStatus);
+        });
+}
