@@ -19,6 +19,7 @@ function allMeals(callback) {
         exec(function(err, data){
             if (err) return console.log(err);
             callback(data);
+            console.log(data);
         });
 }
 
@@ -108,6 +109,19 @@ function addRecipe(data) {
     });
 }
 
+//Check if a recipe is already in meals database.
+function recipeInMeals(recipes, callback){    
+    for(let i =0; i<recipes.length; i++){
+        let check = myMealsSchema.exists({ recipeRef: recipes[i]._id});
+        check.then(function(result){
+            recipes[i] = {"active" : result}
+            console.log(recipes[i].active);
+        });
+    }
+    console.log(recipes);
+    callback(recipes);      
+}
+
 //export of re-usable functions for use in routes.
 exports.allMeals = allMeals;
 exports.allRecipes = allRecipes;
@@ -116,3 +130,4 @@ exports.addMeal = addMeal;
 exports.updateMeal = updateMeal;
 exports.removeMeal = removeMeal;
 exports.addRecipe = addRecipe;
+exports.recipeInMeals = recipeInMeals;

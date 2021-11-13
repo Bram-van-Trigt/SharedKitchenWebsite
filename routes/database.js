@@ -6,8 +6,12 @@ const db = require('../databaseQueries');
 
 //Routes for database calls
 router.get('/recipes', function( req, res, next ) {
-    db.allRecipes(sendRecipes);
+    db.allRecipes(CompareData);
+    function CompareData(data){
+        db.recipeInMeals(data, sendRecipes);
+    }
     function sendRecipes(data){
+        console.log(data);
         res.send(data);
     }
 });
