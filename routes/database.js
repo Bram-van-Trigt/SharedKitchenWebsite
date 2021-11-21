@@ -8,6 +8,7 @@ const db = require('../databaseQueries');
 router.get('/recipes', function( req, res, next ) {
     db.allRecipes(CompareData);
     function CompareData(data){
+        console.log("start:", data)
         db.recipeInMeals(data, sendRecipes);
     }
     function sendRecipes(data){
