@@ -7,22 +7,24 @@ function getRecipes(){
         datatype: 'json'
     })
     .done(function (data){
-        drawProducts(data);
+        drawProducts(data[0], data[1]);
         console.log("ajax call succesfull")
     })
 }
 
 //Draws the recipe cards
-function drawProducts(returnValues) {
-    for(let i = 0; i<returnValues.length; i++)
-    {       product = new RecipeCard(
-        returnValues[i]._id, returnValues[i].recipeName, returnValues[i].description, returnValues[i].preperationTime, returnValues[i].cookingTime, returnValues[i].persons
+function drawProducts(returnRecipes, returnMeals) {
+    console.log(returnMeals)
+    for(let i = 0; i<returnRecipes.length; i++)
+    {   //Create the recipeCard class for recipe.
+        product = new RecipeCard(
+        returnRecipes[i]._id, returnRecipes[i].recipeName, returnRecipes[i].description, returnRecipes[i].preperationTime, returnRecipes[i].cookingTime, returnRecipes[i].persons,
         );
         product.draw();
     }
 }
 
-//class that is used to make the product boxes
+//Class that is used to make the product boxes
 var RecipeCard = class {
     constructor(_id, name, description, prepTime, cookTime, persons){
         this.draw = function () {
@@ -98,7 +100,6 @@ var RecipeCard = class {
             });
             button.appendChild(document.createTextNode("Add to meals"));
             cardFooter.appendChild(button);
-
             $(".row")[0].appendChild(columns);
         };
     };

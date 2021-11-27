@@ -5,16 +5,12 @@ const { json } = require('express');
 const db = require('../databaseQueries');
 
 //Routes for database calls
-router.get('/recipes', function( req, res, next ) {
-    db.allRecipes(CompareData);
-    function CompareData(data){
-        console.log("start:", data)
-        db.recipeInMeals(data, sendRecipes);
-    }
-    function sendRecipes(data){
-        console.log(data);
+router.get('/recipes', async function( req, res, next ) {
+    const recipes = await db.testRecipes();
+    const meals = await db.testMeals();   
+    Promise.all([recipes,meals]).then(data => {
         res.send(data);
-    }
+    });
 });
 
 module.exports = router;

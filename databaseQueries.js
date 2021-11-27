@@ -109,31 +109,12 @@ function addRecipe(data) {
     });
 }
 
-//Database request to check if recipe is in meals database.
-function existsInMeals(recipeId) {
-    return myMealsSchema.exists({recipeRef : recipeId});
+function testRecipes() {
+   return myRecipesSchema.find({}, null, {sort: {recipeName: 1}});
 }
 
-//Adds response from existInMeals and adds it to the recipe data.
-function responseExistsInMeals(response, recipes, i){
-    return new Promise((resolve, reject) => {
-        console.log('processing response');
-        resolve(recipes[i] = {"active" : response})
-    })
-}
-
-//Check if a recipe is already in meals database.
-function recipeInMeals(recipes, callback){ 
-    for(let i =0; i<recipes.length; i++){
-        existsInMeals(recipes[i]._id).then(response => {
-            console.log('response recieved:' +  response);
-            return responseExistsInMeals(response, recipes, i);
-        }).then(processedResponse => {
-            console.log(processedResponse)
-        })
-    }
-    console.log(recipes);
-    callback(recipes);    
+function testMeals() {
+   return myMealsSchema.find({}, null, {sort: {MealName: 1}});
 }
 
 //export of re-usable functions for use in routes.
@@ -144,4 +125,5 @@ exports.addMeal = addMeal;
 exports.updateMeal = updateMeal;
 exports.removeMeal = removeMeal;
 exports.addRecipe = addRecipe;
-exports.recipeInMeals = recipeInMeals;
+exports.testRecipes = testRecipes;
+exports.testMeals = testMeals;
