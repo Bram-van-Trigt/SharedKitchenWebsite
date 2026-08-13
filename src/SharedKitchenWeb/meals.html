@@ -48,7 +48,7 @@
     }
 
     async function castMeal(id) {
-      await api.patch(`/meals/${id}/cast`);
+      await api.patch(`/meals/${id}`, { cast: true });
       loadMeals();
     }
 

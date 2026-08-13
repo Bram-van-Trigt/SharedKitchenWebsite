@@ -12,6 +12,9 @@ public class MealsFunctions(TableServiceClient tableService, ILogger<MealsFuncti
 {
     private const string TableName = "meals";
 
+    private static readonly JsonSerializerOptions JsonOpts =
+        new() { PropertyNameCaseInsensitive = true };
+
     // GET /api/meals
     [Function("GetMeals")]
     public async Task<IActionResult> GetAll(
@@ -27,13 +30,30 @@ public class MealsFunctions(TableServiceClient tableService, ILogger<MealsFuncti
         return new OkObjectResult(meals.OrderBy(m => m.MealName).ToList());
     }
 
-    // POST /api/meals  — body: { "recipeId": "...", "mealName": "..." }
+    // GET /api/meals/{id}
+    [Function("GetMeal")]
+    public async Task<IActionResult> GetOne(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "meals/{id}")] HttpRequest req,
+        string id)
+    {
+        var client = tableService.GetTableClient(TableName);
+        try
+        {
+            var entity = await client.GetEntityAsync<MealEntity>("meal", id);
+            return new OkObjectResult(entity.Value);
+        }
+        catch (Azure.RequestFailedException ex) when (ex.Status == 404)
+        {
+            return new NotFoundResult();
+        }
+    }
+
+    // POST /api/meals — add a recipe to the meals list
     [Function("AddMeal")]
     public async Task<IActionResult> Add(
         [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "meals")] HttpRequest req)
     {
-        var body = await JsonSerializer.DeserializeAsync<MealEntity>(req.Body,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var body = await JsonSerializer.DeserializeAsync<MealEntity>(req.Body, JsonOpts);
 
         if (body is null || string.IsNullOrWhiteSpace(body.RecipeId))
             return new BadRequestObjectResult("RecipeId is required.");
@@ -46,22 +66,29 @@ public class MealsFunctions(TableServiceClient tableService, ILogger<MealsFuncti
         await client.AddEntityAsync(body);
 
         logger.LogInformation("Meal added: {Name}", body.MealName);
-        return new CreatedResult($"/api/meals/{body.RowKey}", body);
+        return new CreatedAtRouteResult("GetMeal", new { id = body.RowKey }, body);
     }
 
-    // PATCH /api/meals/{id}/cast  — marks a meal as cast to MagicMirror
-    [Function("CastMeal")]
-    public async Task<IActionResult> Cast(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "meals/{id}/cast")] HttpRequest req,
+    // PATCH /api/meals/{id} — partial update, e.g. { "cast": true }
+    [Function("PatchMeal")]
+    public async Task<IActionResult> Patch(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "patch", Route = "meals/{id}")] HttpRequest req,
         string id)
     {
+        var patch = await JsonSerializer.DeserializeAsync<MealPatch>(req.Body, JsonOpts);
+        if (patch is null)
+            return new BadRequestObjectResult("Request body is required.");
+
         var client = tableService.GetTableClient(TableName);
         try
         {
             var entity = await client.GetEntityAsync<MealEntity>("meal", id);
             var meal = entity.Value;
-            meal.Cast = true;
-            await client.UpdateEntityAsync(meal, meal.ETag);
+
+            if (patch.Cast.HasValue) meal.Cast = patch.Cast.Value;
+            if (patch.MealName is not null) meal.MealName = patch.MealName;
+
+            await client.UpdateEntityAsync(meal, meal.ETag, TableUpdateMode.Merge);
             return new OkObjectResult(meal);
         }
         catch (Azure.RequestFailedException ex) when (ex.Status == 404)
@@ -88,3 +115,6 @@ public class MealsFunctions(TableServiceClient tableService, ILogger<MealsFuncti
         }
     }
 }
+
+/// <summary>Payload for PATCH /api/meals/{id}. Only provided fields are applied.</summary>
+public record MealPatch(string? MealName, bool? Cast);

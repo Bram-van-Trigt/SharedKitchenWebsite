@@ -54,7 +54,9 @@
     }
 
     async function toggleCheck(id) {
-      await api.patch(`/groceries/${id}/check`);
+      // Read current state then toggle via PATCH
+      const item = await api.get(`/groceries/${id}`);
+      await api.patch(`/groceries/${id}`, { checked: !item.checked });
       loadGroceries();
     }
 

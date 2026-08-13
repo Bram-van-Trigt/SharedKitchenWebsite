@@ -12,6 +12,9 @@ public class RecipesFunctions(TableServiceClient tableService, ILogger<RecipesFu
 {
     private const string TableName = "recipes";
 
+    private static readonly JsonSerializerOptions JsonOpts =
+        new() { PropertyNameCaseInsensitive = true };
+
     // GET /api/recipes
     [Function("GetRecipes")]
     public async Task<IActionResult> GetAll(
@@ -24,8 +27,7 @@ public class RecipesFunctions(TableServiceClient tableService, ILogger<RecipesFu
         await foreach (var entity in client.QueryAsync<RecipeEntity>(r => r.PartitionKey == "recipe"))
             recipes.Add(entity);
 
-        recipes = [.. recipes.OrderBy(r => r.Name)];
-        return new OkObjectResult(recipes);
+        return new OkObjectResult(recipes.OrderBy(r => r.Name).ToList());
     }
 
     // GET /api/recipes/{id}
@@ -46,13 +48,12 @@ public class RecipesFunctions(TableServiceClient tableService, ILogger<RecipesFu
         }
     }
 
-    // POST /api/recipes
+    // POST /api/recipes — create a new recipe
     [Function("CreateRecipe")]
     public async Task<IActionResult> Create(
         [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "recipes")] HttpRequest req)
     {
-        var body = await JsonSerializer.DeserializeAsync<RecipeEntity>(req.Body,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var body = await JsonSerializer.DeserializeAsync<RecipeEntity>(req.Body, JsonOpts);
 
         if (body is null || string.IsNullOrWhiteSpace(body.Name))
             return new BadRequestObjectResult("Recipe name is required.");
@@ -66,6 +67,33 @@ public class RecipesFunctions(TableServiceClient tableService, ILogger<RecipesFu
 
         logger.LogInformation("Recipe created: {Name}", body.Name);
         return new CreatedAtRouteResult("GetRecipe", new { id = body.RowKey }, body);
+    }
+
+    // PUT /api/recipes/{id} — full replace of an existing recipe
+    [Function("UpdateRecipe")]
+    public async Task<IActionResult> Update(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "recipes/{id}")] HttpRequest req,
+        string id)
+    {
+        var body = await JsonSerializer.DeserializeAsync<RecipeEntity>(req.Body, JsonOpts);
+
+        if (body is null || string.IsNullOrWhiteSpace(body.Name))
+            return new BadRequestObjectResult("Recipe name is required.");
+
+        body.RowKey = id;
+        body.PartitionKey = "recipe";
+
+        var client = tableService.GetTableClient(TableName);
+        try
+        {
+            // ReplaceEntity performs a full replace (idempotent)
+            await client.UpdateEntityAsync(body, Azure.ETag.All, TableUpdateMode.Replace);
+            return new OkObjectResult(body);
+        }
+        catch (Azure.RequestFailedException ex) when (ex.Status == 404)
+        {
+            return new NotFoundResult();
+        }
     }
 
     // DELETE /api/recipes/{id}
