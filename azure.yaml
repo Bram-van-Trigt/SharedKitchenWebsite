@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: shared-kitchen
+metadata:
+  template: shared-kitchen-azd
+
+services:
+  # C# Azure Functions API backend
+  api:
+    project: ./src/SharedKitchenApi/
+    language: dotnet
+    host: function
+
+  # Static HTML/JS frontend → Azure Static Web Apps
+  web:
+    project: ./src/SharedKitchenWeb/
+    language: js
+    host: staticwebapp

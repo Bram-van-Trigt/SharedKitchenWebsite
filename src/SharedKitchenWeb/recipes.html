@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipes – SharedKitchen</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🍳 SharedKitchen</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="recipes.html" class="active">Recipes</a>
+      <a href="meals.html">Meals</a>
+      <a href="groceries.html">Groceries</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Recipes</h2>
+
+    <button id="btn-new" class="btn-primary">+ New Recipe</button>
+
+    <!-- New recipe form (hidden by default) -->
+    <form id="form-recipe" class="form-card" style="display:none">
+      <h3>Add Recipe</h3>
+      <label>Name <input type="text" id="r-name" required /></label>
+      <label>Description <textarea id="r-desc"></textarea></label>
+      <label>Preparation time (min) <input type="number" id="r-prep" value="0" /></label>
+      <label>Cooking time (min) <input type="number" id="r-cook" value="0" /></label>
+      <label>Persons <input type="number" id="r-persons" value="4" /></label>
+      <label>Ingredients (name:amount, name:amount) <input type="text" id="r-ingredients" /></label>
+      <label>Instructions <textarea id="r-instructions"></textarea></label>
+      <label>Source URL <input type="url" id="r-source" /></label>
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Save</button>
+        <button type="button" id="btn-cancel" class="btn-secondary">Cancel</button>
+      </div>
+    </form>
+
+    <ul id="recipe-list" class="item-list"></ul>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script>
+    const list = document.getElementById('recipe-list');
+    const form = document.getElementById('form-recipe');
+
+    async function loadRecipes() {
+      const recipes = await api.get('/recipes');
+      list.innerHTML = '';
+      if (!recipes.length) { list.innerHTML = '<li>No recipes yet.</li>'; return; }
+      recipes.forEach(r => {
+        const li = document.createElement('li');
+        li.className = 'item-card';
+        li.innerHTML = `
+          <div class="item-info">
+            <strong>${r.name}</strong>
+            <span>${r.description || ''}</span>
+            <small>⏱ ${r.preparationTimeMinutes + r.cookingTimeMinutes} min · 👥 ${r.persons}</small>
+          </div>
+          <div class="item-actions">
+            <button class="btn-secondary" onclick="addToMeals('${r.rowKey}','${r.name}')">+ Meals</button>
+            <button class="btn-danger" onclick="deleteRecipe('${r.rowKey}')">Delete</button>
+          </div>`;
+        list.appendChild(li);
+      });
+    }
+
+    async function addToMeals(id, name) {
+      await api.post('/meals', { recipeId: id, mealName: name });
+      alert(`"${name}" added to meals!`);
+    }
+
+    async function deleteRecipe(id) {
+      if (!confirm('Delete this recipe?')) return;
+      await api.del(`/recipes/${id}`);
+      loadRecipes();
+    }
+
+    document.getElementById('btn-new').addEventListener('click', () => {
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+    document.getElementById('btn-cancel').addEventListener('click', () => {
+      form.style.display = 'none'; form.reset();
+    });
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      await api.post('/recipes', {
+        name: document.getElementById('r-name').value,
+        description: document.getElementById('r-desc').value,
+        preparationTimeMinutes: +document.getElementById('r-prep').value,
+        cookingTimeMinutes: +document.getElementById('r-cook').value,
+        persons: +document.getElementById('r-persons').value,
+        ingredients: document.getElementById('r-ingredients').value,
+        instructions: document.getElementById('r-instructions').value,
+        source: document.getElementById('r-source').value
+      });
+      form.style.display = 'none'; form.reset();
+      loadRecipes();
+    });
+
+    loadRecipes();
+  </script>
+</body>
+</html>
