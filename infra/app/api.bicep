@@ -30,7 +30,7 @@ var baseAppSettings = {
   AzureWebJobsStorage__credential: 'managedidentity'
   AzureWebJobsStorage__clientId: identityClientId
   APPLICATIONINSIGHTS_AUTHENTICATION_STRING: applicationInsightsIdentity
-  APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
+  APPLICATIONINSIGHTS_CONNECTION_STRING: !empty(applicationInsightsName) ? applicationInsights.properties.ConnectionString : ''
 }
 
 var blobSettings = enableBlob ? { AzureWebJobsStorage__blobServiceUri: stg.properties.primaryEndpoints.blob } : {}

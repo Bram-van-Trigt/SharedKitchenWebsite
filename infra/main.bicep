@@ -10,7 +10,10 @@ param location string = 'westeurope'
 param principalId string = deployer().objectId
 
 var namePrefix = 'sharedkitchen'
-var tags = { app: 'SharedKitchenInfra'; env: environment }
+var tags = {
+  app: 'SharedKitchenInfra'
+  env: environment
+}
 
 var resourceGroupName = '${namePrefix}-rg-${environment}'
 var managedIdentityName = '${namePrefix}-id-${environment}'
@@ -113,7 +116,7 @@ module api './app/api.bicep' = {
     identityClientId: apiUserAssignedIdentity.outputs.clientId
     appSettings: {
       // Table Storage endpoint — read by Program.cs via DefaultAzureCredential
-      StorageTableEndpoint: storage.outputs.primaryTableEndpoint
+      StorageTableEndpoint: 'https://${storage.outputs.name}.table.core.windows.net'
     }
     virtualNetworkSubnetId: ''
   }
