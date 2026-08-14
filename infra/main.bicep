@@ -15,19 +15,19 @@ param principalId string = deployer().objectId
 var namePrefix = 'sharedkitchen'
 var tags = { 'azd-env-name': environmentName }
 
-var resourceGroupDefaultName = '${namePrefix}-rg-${environment}'
-var managedIdentityDefaultName = '${namePrefix}-id-${environment}'
-var appServicePlanDefaultName = '${namePrefix}-plan-${environment}'
-var storageAccountDefaultName = '${namePrefix}st${environment}'
-var functionAppDefaultName = '${namePrefix}-func-${environment}'
-var logAnalyticsDefaultName = '${namePrefix}-log-${environment}'
-var applicationInsightsDefaultName = '${namePrefix}-appi-${environment}'
-var staticWebAppDefaultName = '${namePrefix}-swa-${environment}'
+var resourceGroupName = '${namePrefix}-rg-${environment}'
+var managedIdentityName = '${namePrefix}-id-${environment}'
+var appServicePlanName = '${namePrefix}-plan-${environment}'
+var storageAccountName = '${namePrefix}st${environment}'
+var functionAppName = '${namePrefix}-func-${environment}'
+var logAnalyticsName = '${namePrefix}-log-${environment}'
+var applicationInsightsName = '${namePrefix}-appi-${environment}'
+var staticWebAppName = '${namePrefix}-swa-${environment}'
 var deploymentStorageContainerName = 'app-package'
 
 // Resource group
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: resourceGroupDefaultName
+  name: resourceGroupName
   location: location
   tags: tags
 }
@@ -39,7 +39,7 @@ module apiUserAssignedIdentity 'br/public:avm/res/managed-identity/user-assigned
   params: {
     location: location
     tags: tags
-    name: managedIdentityDefaultName
+    name: managedIdentityName
   }
 }
 
@@ -48,7 +48,7 @@ module appServicePlan 'br/public:avm/res/web/serverfarm:0.1.1' = {
   name: 'appserviceplan'
   scope: rg
   params: {
-    name: appServicePlanDefaultName
+    name: appServicePlanName
     sku: { name: 'FC1', tier: 'FlexConsumption' }
     reserved: true
     location: location
@@ -61,7 +61,7 @@ module storage 'br/public:avm/res/storage/storage-account:0.8.3' = {
   name: 'storage'
   scope: rg
   params: {
-    name: storageAccountDefaultName
+    name: storageAccountName
     allowBlobPublicAccess: false
     allowSharedKeyAccess: false
     dnsEndpointType: 'Standard'
@@ -100,7 +100,7 @@ module api './app/api.bicep' = {
   name: 'api'
   scope: rg
   params: {
-    name: functionAppDefaultName
+    name: functionAppName
     location: location
     tags: tags
     applicationInsightsName: monitoring.outputs.name
@@ -143,7 +143,7 @@ module logAnalytics 'br/public:avm/res/operational-insights/workspace:0.11.1' = 
   name: 'loganalytics'
   scope: rg
   params: {
-    name: logAnalyticsDefaultName
+    name: logAnalyticsName
     location: location
     tags: tags
     dataRetention: 30
@@ -155,7 +155,7 @@ module monitoring 'br/public:avm/res/insights/component:0.6.0' = {
   name: 'appinsights'
   scope: rg
   params: {
-    name: applicationInsightsDefaultName
+    name: applicationInsightsName
     location: location
     tags: tags
     workspaceResourceId: logAnalytics.outputs.resourceId
@@ -168,7 +168,7 @@ module staticWebApp 'br/public:avm/res/web/static-site:0.3.0' = {
   name: 'staticWebApp'
   scope: rg
   params: {
-    name: staticWebAppDefaultName
+    name: staticWebAppName
     location: location
     tags: union(tags, { 'azd-service-name': 'web' })
     sku: 'Free'
