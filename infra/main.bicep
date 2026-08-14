@@ -10,7 +10,7 @@ param location string = 'westeurope'
 param principalId string = deployer().objectId
 
 var namePrefix = 'sharedkitchen'
-var tags = 'SharedKitchenInfra'
+var tags = { app: 'SharedKitchenInfra'; env: environment }
 
 var resourceGroupName = '${namePrefix}-rg-${environment}'
 var managedIdentityName = '${namePrefix}-id-${environment}'
