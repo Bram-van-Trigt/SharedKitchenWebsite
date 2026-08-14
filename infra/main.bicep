@@ -9,20 +9,21 @@ param location string = 'westeurope'
 @description('Principal ID of the deployer — used to grant local developer access to storage.')
 param principalId string = deployer().objectId
 
-var namePrefix = 'sharedkitchen'
 var tags = {
   app: 'SharedKitchenInfra'
   env: environment
 }
 
-var resourceGroupName = '${namePrefix}-rg-${environment}'
-var managedIdentityName = '${namePrefix}-id-${environment}'
-var appServicePlanName = '${namePrefix}-plan-${environment}'
-var storageAccountName = '${namePrefix}st${environment}'
-var functionAppName = '${namePrefix}-func-${environment}'
-var logAnalyticsName = '${namePrefix}-log-${environment}'
-var applicationInsightsName = '${namePrefix}-appi-${environment}'
-var staticWebAppName = '${namePrefix}-swa-${environment}'
+var namePrefix = 'ska'
+var env = toLower(environment)
+var resourceGroupName = '${namePrefix}-rg-${env}'
+var managedIdentityName = '${namePrefix}-id-${env}'
+var appServicePlanName = '${namePrefix}-plan-${env}'
+var storageAccountName = '${namePrefix}st${env}'
+var functionAppName = '${namePrefix}-func-${env}'
+var logAnalyticsName = '${namePrefix}-log-${env}'
+var applicationInsightsName = '${namePrefix}-appi-${env}'
+var staticWebAppName = '${namePrefix}-swa-${env}'
 var deploymentStorageContainerName = 'app-package'
 
 // Resource group
