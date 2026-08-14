@@ -1,2 +1,4 @@
 node_modules/
 jsonGenerator.js
+/.vs
+/src/SharedKitchenApi/obj

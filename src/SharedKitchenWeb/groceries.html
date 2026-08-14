@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Groceries – SharedKitchen</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🍳 SharedKitchen</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="meals.html">Meals</a>
+      <a href="groceries.html" class="active">Groceries</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Grocery List</h2>
+
+    <form id="form-grocery" class="form-inline">
+      <input type="text" id="g-name" placeholder="Item (e.g. Milk)" required />
+      <input type="text" id="g-qty" placeholder="Quantity (e.g. 2L)" />
+      <button type="submit" class="btn-primary">Add</button>
+    </form>
+
+    <ul id="grocery-list" class="item-list"></ul>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script>
+    const list = document.getElementById('grocery-list');
+
+    async function loadGroceries() {
+      const items = await api.get('/groceries');
+      list.innerHTML = '';
+      if (!items.length) { list.innerHTML = '<li>List is empty 🎉</li>'; return; }
+      items.forEach(g => {
+        const li = document.createElement('li');
+        li.className = 'item-card' + (g.checked ? ' checked' : '');
+        li.innerHTML = `
+          <div class="item-info">
+            <strong>${g.name}</strong>
+            <span>${g.quantity || ''}</span>
+          </div>
+          <div class="item-actions">
+            <button class="btn-secondary" onclick="toggleCheck('${g.rowKey}')">${g.checked ? '↩ Uncheck' : '✓ Check'}</button>
+            <button class="btn-danger" onclick="deleteGrocery('${g.rowKey}')">Delete</button>
+          </div>`;
+        list.appendChild(li);
+      });
+    }
+
+    async function toggleCheck(id) {
+      // Read current state then toggle via PATCH
+      const item = await api.get(`/groceries/${id}`);
+      await api.patch(`/groceries/${id}`, { checked: !item.checked });
+      loadGroceries();
+    }
+
+    async function deleteGrocery(id) {
+      await api.del(`/groceries/${id}`);
+      loadGroceries();
+    }
+
+    document.getElementById('form-grocery').addEventListener('submit', async e => {
+      e.preventDefault();
+      await api.post('/groceries', {
+        name: document.getElementById('g-name').value,
+        quantity: document.getElementById('g-qty').value
+      });
+      e.target.reset();
+      loadGroceries();
+    });
+
+    loadGroceries();
+  </script>
+</body>
+</html>

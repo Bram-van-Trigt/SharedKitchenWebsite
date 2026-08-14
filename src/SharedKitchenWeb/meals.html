@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meals – SharedKitchen</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🍳 SharedKitchen</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="meals.html" class="active">Meals</a>
+      <a href="groceries.html">Groceries</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Meals</h2>
+    <p class="hint">Add meals from the <a href="recipes.html">Recipes</a> page.</p>
+    <ul id="meal-list" class="item-list"></ul>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <script>
+    const list = document.getElementById('meal-list');
+
+    async function loadMeals() {
+      const meals = await api.get('/meals');
+      list.innerHTML = '';
+      if (!meals.length) { list.innerHTML = '<li>No meals planned yet.</li>'; return; }
+      meals.forEach(m => {
+        const li = document.createElement('li');
+        li.className = 'item-card';
+        li.innerHTML = `
+          <div class="item-info">
+            <strong>${m.mealName}</strong>
+            ${m.cast ? '<span class="badge">📺 On Mirror</span>' : ''}
+          </div>
+          <div class="item-actions">
+            ${!m.cast ? `<button class="btn-secondary" onclick="castMeal('${m.rowKey}')">📺 Cast</button>` : ''}
+            <button class="btn-danger" onclick="deleteMeal('${m.rowKey}')">Remove</button>
+          </div>`;
+        list.appendChild(li);
+      });
+    }
+
+    async function castMeal(id) {
+      await api.patch(`/meals/${id}`, { cast: true });
+      loadMeals();
+    }
+
+    async function deleteMeal(id) {
+      if (!confirm('Remove this meal?')) return;
+      await api.del(`/meals/${id}`);
+      loadMeals();
+    }
+
+    loadMeals();
+  </script>
+</body>
+</html>
