@@ -1,8 +1,5 @@
 targetScope = 'subscription'
 
-@description('AZD environment name.')
-param environmentName string
-
 @description('Deployment environment suffix used in default resource names.')
 param environment string = 'dev'
 
@@ -13,7 +10,7 @@ param location string = 'westeurope'
 param principalId string = deployer().objectId
 
 var namePrefix = 'sharedkitchen'
-var tags = { 'azd-env-name': environmentName }
+var tags = 'SharedKitchenInfra'
 
 var resourceGroupName = '${namePrefix}-rg-${environment}'
 var managedIdentityName = '${namePrefix}-id-${environment}'
