@@ -21,8 +21,8 @@
     "daemon": "^1.1.0",
     "express": "^4.22.2",
     "express-handlebars": "^5.3.2",
-    "express-session": "^1.17.2",
+    "express-session": "^1.19.0",
     "mongoose": "^6.13.10",
-    "pug": "^3.0.2"
+    "pug": "^3.0.3"
   }
 }
